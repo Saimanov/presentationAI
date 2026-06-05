@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-ассистенты для бизнеса</title>
+
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg2: #0f1218;
+    --card: #13171f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #2196f3;
+    --accent2: #1565c0;
+    --text: #f0f2f5;
+    --muted: #7a8499;
+    --heading: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    --body: -apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--heading);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+  }
+  .container { max-width: 1100px; width: 100%; }
+
+  /* GRID NOISE BG */
+  section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* SLIDE 1 — HERO */
+  #s1 {
+    background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(33,150,243,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 20% 80%, rgba(21,101,192,0.07) 0%, transparent 60%),
+                var(--bg);
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(33,150,243,0.35);
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 36px;
+  }
+  .hero-title {
+    font-family: var(--heading);
+    font-size: clamp(32px, 5vw, 68px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 820px;
+    margin-bottom: 28px;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 600px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--heading);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 2px;
+  }
+  .btn:hover { background: var(--accent); color: #fff; }
+
+  .stats-row {
+    display: flex;
+    gap: 48px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+  .stat-item .num {
+    font-family: var(--heading);
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .stat-item .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+
+  /* SECTION TITLES */
+  .sec-num {
+    font-family: var(--heading);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .sec-title {
+    font-family: var(--heading);
+    font-size: clamp(24px, 3.5vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .sec-desc {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  /* CARDS */
+  .cards { display: grid; gap: 20px; }
+  .cards-2 { grid-template-columns: 1fr 1fr; }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(0,229,192,0.2); }
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: rgba(33,150,243,0.12);
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .card-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .card h3 {
+    font-family: var(--heading);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .card p, .card ul {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .card ul { list-style: none; padding: 0; }
+  .card ul li { padding: 4px 0; }
+  .card ul li::before { content: '→ '; color: var(--accent); font-size: 12px; }
+
+  /* PRICE CARD */
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 36px;
+  }
+  .price-card.featured { border-color: rgba(33,150,243,0.4); }
+  .price-card h3 {
+    font-family: var(--heading);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .price-card .price {
+    font-family: var(--heading);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    margin: 16px 0 4px;
+  }
+  .price-card .price-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .price-card ul { list-style: none; padding: 0; }
+  .price-card ul li {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .price-card ul li::before { content: '✓'; color: var(--accent); font-size: 12px; flex-shrink: 0; margin-top: 2px; }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    font-family: var(--heading);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.7;
+    padding-top: 4px;
+  }
+  .step h3 {
+    font-family: var(--heading);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+  /* CHECKS */
+  .checks { list-style: none; padding: 0; display: grid; gap: 12px; }
+  .checks li {
+    font-size: 15px;
+    color: var(--muted);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .checks li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* FLOW */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 40px 0;
+  }
+  .flow-step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .flow-step-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(33,150,243,0.12);
+    border-radius: 2px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+  }
+  .flow-arrow { display: none; }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    background: rgba(33,150,243,0.12);
+    color: var(--accent);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  /* CTA */
+  #s18 {
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(33,150,243,0.09) 0%, transparent 70%), var(--bg);
+    text-align: center;
+  }
+  #s18 .sec-title { max-width: 700px; margin: 0 auto 20px; }
+  #s18 .sec-desc { margin: 0 auto 48px; }
+  .cta-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 680px;
+    margin: 0 auto 48px;
+    text-align: left;
+  }
+  .cta-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 22px 24px;
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .cta-card::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .logo { font-family: var(--heading); font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 0.12em; }
+  footer .copy { font-size: 12px; color: var(--muted); }
+
+  /* ANIMATIONS - disabled for compatibility */
+  .fade-up {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 100px 24px 60px; }
+    .cards-2, .cards-3 { grid-template-columns: 1fr; }
+    .stats-row { flex-wrap: wrap; gap: 28px; }
+    .flow { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .cta-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AI-Ассистенты</div>
+  <ul class="nav-links">
+    <li><a href="#s3">Проблема</a></li>
+    <li><a href="#s5">Решение</a></li>
+    <li><a href="#s7">Продукты</a></li>
+    <li><a href="#s14">Стоимость</a></li>
+    <li><a href="#s18">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- SLIDE 1 -->
+<section id="s1">
+  <div class="container">
+    <div class="fade-up">
+      <div class="hero-label">AI-Ассистенты для бизнеса · 2026</div>
+      <h1 class="hero-title">Цифровые сотрудники, которые снимают <span>80% рутины в продажах</span> и не теряют ни одного обращения</h1>
+      <p class="hero-sub">Голосовые и текстовые AI-ассистенты, которые работают 24/7, обрабатывают обращения, квалифицируют клиентов, фиксируют данные в CRM и передают менеджерам готового клиента.</p>
+      <a href="#s3" class="btn">Узнать больше</a>
+    </div>
+    <div class="stats-row fade-up">
+      <div class="stat-item"><div class="num">24/7</div><div class="lbl">Без перерывов и выходных</div></div>
+      <div class="stat-item"><div class="num">80%</div><div class="lbl">Рутины берут на себя</div></div>
+      <div class="stat-item"><div class="num">0</div><div class="lbl">Потерянных обращений</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3 — PROBLEM -->
+<section id="s3">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">02 · Проблема</div>
+      <h2 class="sec-title">Зачем вам цифровые сотрудники и какая выгода для бизнеса?</h2>
+      <p class="sec-desc">Большинство компаний уверены, что проблема в недостатке заявок. Но на практике деньги теряются гораздо раньше — уже на первичном контакте и из-за отсутствия системной работы с базой.</p>
+    </div>
+    <div class="cards cards-2 fade-up">
+      <div class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>Потери на первом контакте</h3>
+        <ul>
+          <li>Обращения обрабатываются вручную, клиенты не получают ответ вовремя</li>
+          <li>В нерабочее время и в выходные никто не отвечает — клиенты уходят к конкурентам</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg></div>
+        <h3>Системные потери</h3>
+        <ul>
+          <li>Работа с базой не ведётся — компания недозарабатывает приличные деньги</li>
+          <li>Менеджеры тратят время на операционку вместо закрытия сделок, часть заявок теряется</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 — SOLUTION OVERVIEW -->
+<section id="s4">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">03 · Система</div>
+      <h2 class="sec-title">AI-система как полноценный отдел коммуникаций</h2>
+      <p class="sec-desc">Голосовые и текстовые ассистенты работают вместе как единая система — 24 часа в сутки, без выгорания, увеличения команды и отмазок.</p>
+    </div>
+    <div class="cards cards-3 fade-up">
+      <div class="card">
+        <h3>Принимает</h3>
+        <ul>
+          <li>Звонки</li>
+          <li>Сообщения в соцсетях и мессенджерах</li>
+          <li>Консультирует клиентов</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Обрабатывает</h3>
+        <ul>
+          <li>Квалифицирует клиента</li>
+          <li>Заполняет данные в CRM</li>
+          <li>Реактивирует базу</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Передаёт</h3>
+        <ul>
+          <li>Только заинтересованных клиентов менеджерам</li>
+          <li>Готовые заявки с данными</li>
+          <li>Фокус команды — на сделках</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fade-up" style="margin-top:32px; font-size:15px; color:var(--muted);">Ваши сотрудники фокусируются на текущих сделках, не тратя время на рутину. Производительность и эффективность вашего бизнеса растёт.</p>
+  </div>
+</section>
+
+<!-- SLIDE 5 — OFFER -->
+<section id="s5">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">04 · Наше предложение</div>
+      <h2 class="sec-title">Один клиентский путь — единая система</h2>
+    </div>
+    <div class="flow fade-up">
+      <div class="flow-step"><span class="flow-step-num">01</span>Клиент пишет или звонит</div>
+      <div class="flow-step"><span class="flow-step-num">02</span>AI мгновенно отвечает</div>
+      <div class="flow-step"><span class="flow-step-num">03</span>Выявляет потребность</div>
+      <div class="flow-step"><span class="flow-step-num">04</span>Квалифицирует</div>
+      <div class="flow-step"><span class="flow-step-num">05</span>Заполняет CRM</div>
+      <div class="flow-step"><span class="flow-step-num">06</span>Передаёт менеджеру</div>
+    </div>
+    <p class="fade-up" style="font-size:14px; color:var(--muted); margin-bottom:40px;">Менеджер подключается только в сложных ситуациях, когда нужен человек.</p>
+    <div class="cards cards-2 fade-up">
+      <div class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Мгновенная обработка 24/7</h3>
+        <p>Система отвечает клиенту в любое время суток независимо от загрузки сотрудников. Вы перестаёте терять клиентов из-за долгих ответов и других человеческих факторов.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Интеграция с CRM</h3>
+        <p>Все обращения автоматически фиксируются в системе. Ни одна заявка не потеряется. У руководителя появляется прозрачная картина по всем обращениям.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDES 7–8 — PRODUCTS -->
+<section id="s7">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">05 · Входящие коммуникации</div>
+      <h2 class="sec-title">Голосовой и текстовый ассистенты</h2>
+      <p class="sec-desc">Два инструмента, которые закрывают все каналы входящих коммуникаций.</p>
+    </div>
+    <div class="cards cards-2 fade-up">
+      <div class="price-card">
+        <h3><svg style="width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Голосовой ассистент</h3>
+        <p style="font-size:13px; color:var(--muted); margin-top:8px;">Принимает звонки, консультирует, квалифицирует клиентов, записывает на встречу, передаёт данные в CRM.</p>
+        <div class="price">от 2 990 ₽<span style="font-size:16px;font-weight:400">/мес</span></div>
+        <div class="price-note">подписка на платформу</div>
+        <ul>
+          <li>Разговор: 10–11 ₽/минута</li>
+          <li>Аренда номера: от 497 ₽/месяц</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <h3><svg style="width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Текстовый ассистент</h3>
+        <p style="font-size:13px; color:var(--muted); margin-top:8px;">Telegram, MAX, WhatsApp, онлайн-чат сайта, Авито и другие каналы. Консультирует, квалифицирует, передаёт заявки.</p>
+        <div class="price">от 4 000 ₽<span style="font-size:16px;font-weight:400">/мес</span></div>
+        <div class="price-note">подписка на платформу</div>
+        <ul>
+          <li>Стоимость диалога: 5–10 ₽</li>
+          <li>Ищет пропущенные обращения</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9 — OUTBOUND -->
+<section id="s9">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">06 · Исходящие коммуникации</div>
+      <h2 class="sec-title">AI-продавец для работы с базой</h2>
+    </div>
+    <div class="cards cards-2 fade-up">
+      <div class="card">
+        <h3>Возможности системы</h3>
+        <ul>
+          <li>Реактивировать базу старых клиентов</li>
+          <li>Обзванивать тёплую базу</li>
+          <li>Искать пропущенные заявки</li>
+          <li>Передавать заинтересованных менеджеру</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(33,150,243,0.25); background: linear-gradient(135deg, rgba(33,150,243,0.05), var(--card))">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <h3>Результат</h3>
+        <p style="font-size:16px; line-height:1.7;">Дополнительные продажи без увеличения рекламного бюджета.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10–11 — DIGITAL EMPLOYEE -->
+<section id="s10">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">07 · Цифровые сотрудники</div>
+      <h2 class="sec-title">Готовая инфраструктура, которая работает с первого дня</h2>
+      <p class="sec-desc">Фактически вы получаете отдел коммуникаций — цифровых сотрудников с базой знаний о вашей компании.</p>
+    </div>
+    <div class="cards cards-2 fade-up">
+      <div class="card">
+        <h3>Что умеет цифровой сотрудник</h3>
+        <ul class="checks">
+          <li>Знает вашу компанию и использует базу знаний</li>
+          <li>Работает в CRM</li>
+          <li>Ведёт естественный диалог</li>
+          <li>Консультирует клиентов</li>
+          <li>Передаёт сложные кейсы сотрудникам</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Всё внутри системы</h3>
+        <ul class="checks">
+          <li>Встроенная телефония</li>
+          <li>Аренда номеров</li>
+          <li>Базовая CRM в комплекте</li>
+          <li>История коммуникаций</li>
+          <li>До 150 одновременных звонков</li>
+        </ul>
+        <p style="font-size:13px; color:var(--muted); margin-top:20px;">Без необходимости собирать инфраструктуру из разных сервисов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12 — PROCESS -->
+<section id="s12">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">08 · Внедрение</div>
+      <h2 class="sec-title">Разработка под ключ — от аудита до запуска</h2>
+      <p class="sec-desc">Полный цикл сопровождения: разбираем процессы, строим архитектуру, разрабатываем, запускаем и сопровождаем.</p>
+    </div>
+    <div class="steps fade-up">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h3>Аудит текущих процессов</h3>
+          <p>Разбираем как происходит обработка входящего трафика и определяем правильную логику дальнейшей коммуникации с клиентами.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h3>Дорожная карта и сценарии взаимодействия</h3>
+          <p>Составляем дорожную карту: где и на каком этапе трафик обрабатывают ассистенты, в каких случаях подключается менеджер — с бесшовным переходом.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h3>Формирование базы знаний</h3>
+          <p>Собираем, структурируем и вносим всю необходимую информацию о компании для корректной работы ассистентов.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div>
+          <h3>Разработка AI-ассистентов</h3>
+          <p>Разворачиваем решение на платформах с подключением нужных моделей. Тестируем в разных сценариях. Корректируем.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div>
+          <h3>Запуск на реальном трафике</h3>
+          <p>Запускаем на небольшом объёме, собираем данные, докручиваем исходя из реальных диалогов. Мониторим качество ответов и сопровождаем первый месяц.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13 — TIMELINE -->
+<section id="s13">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">09 · Сроки</div>
+      <h2 class="sec-title">Быстрое внедрение</h2>
+    </div>
+    <div class="cards cards-2 fade-up">
+      <div class="card" style="border-color:rgba(33,150,243,0.3);">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>Стандартный проект</h3>
+        <div style="font-family:var(--heading); font-size:42px; font-weight:800; color:var(--accent); margin:12px 0;">10–14</div>
+        <p>дней от аудита до запуска</p>
+      </div>
+      <div class="card">
+        <h3>Сложный проект</h3>
+        <div style="font-family:var(--heading); font-size:42px; font-weight:800; color:var(--muted); margin:12px 0;">5–6</div>
+        <p>недель. Зависит от количества сценариев, объёма базы знаний, интеграций и особенностей бизнес-процессов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 14 — PRICING -->
+<section id="s14">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">10 · Стоимость внедрения</div>
+      <h2 class="sec-title">Прозрачное ценообразование</h2>
+      <p class="sec-desc">Итоговая стоимость зависит от сложности разработки и количества интеграций.</p>
+    </div>
+    <div class="cards cards-3 fade-up">
+      <div class="price-card">
+        <h3><svg style="width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Голосовой ассистент</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Приём звонков, квалификация, обзвон тёплой базы, передача данных в CRM, настройка сценариев.</p>
+        <div class="price">от 225 000 ₽</div>
+        <div class="price-note">стоимость разработки</div>
+      </div>
+      <div class="price-card featured">
+        <h3><svg style="width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;margin-right:8px" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Текстовый ассистент</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Цифровой сотрудник во всех каналах: Telegram, MAX, сайт, Авито и другие. База знаний и CRM-интеграция.</p>
+        <div class="price">от 175 000 ₽</div>
+        <div class="price-note">2 канала коммуникации включены</div>
+      </div>
+      <div class="price-card">
+        <h3>🔗 Интеграции</h3>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Кастомные CRM, ERP, U-clients и другие системы. amoCRM и Bitrix24 входят в стоимость разработки.</p>
+        <div class="price">от 55 000 ₽</div>
+        <div class="price-note">за каждую интеграцию</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 15 — SCENARIOS -->
+<section id="s15">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">11 · Сценарии</div>
+      <h2 class="sec-title">Популярные сценарии</h2>
+      <p class="sec-desc">Стоимость сценария: 77 000 ₽. При заказе от 3 сценариев — скидка 20%.</p>
+    </div>
+    <div class="cards cards-3 fade-up">
+      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h3>Входящие звонки</h3><p>Приём, квалификация, передача данных в CRM.</p></div>
+      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Обработка обращений</h3><p>Ответы на частые вопросы, персонализированная консультация, квалификация.</p></div>
+      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg></div><h3>Реактивация базы</h3><p>Обзвон и возврат клиентов без увеличения рекламного бюджета.</p></div>
+      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><h3>Запись на приём</h3><p>Предлагает свободные даты и бронирует слоты автоматически.</p></div>
+      <div class="card"><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><h3>Техподдержка</h3><p>Компетентные ответы на вопросы. Снижение нагрузки на сотрудников и затрат на ФОТ.</p></div>
+      <div class="card" style="border-color:rgba(33,150,243,0.2); background:rgba(33,150,243,0.03)">
+        <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Сопровождение</h3>
+        <div style="font-family:var(--heading); font-size:22px; font-weight:700; color:var(--accent); margin:12px 0;">от 30 000 ₽/мес</div>
+        <p>Контроль качества, мониторинг диалогов, корректировка сценариев, дообучение ассистентов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 17 — RESULTS -->
+<section id="s17" style="min-height:auto; padding-bottom:40px;">
+  <div class="container">
+    <div class="fade-up">
+      <div class="sec-num">12 · Итог</div>
+      <h2 class="sec-title">Что получает бизнес</h2>
+    </div>
+    <div class="cards cards-2 fade-up" style="max-width:760px;">
+      <div class="card">
+        <ul class="checks">
+          <li>Меньше потерянных клиентов</li>
+          <li>Автоматизация рутины</li>
+          <li>Экономия времени</li>
+        </ul>
+      </div>
+      <div class="card">
+        <ul class="checks">
+          <li>Рост производительности и эффективности бизнеса</li>
+          <li>Дополнительные продажи из старой базы</li>
+          <li>Снижение операционных расходов</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 18 — CTA -->
+<section id="s18" style="min-height:auto; padding-top:40px;">
+  <div class="container" style="text-align:center;">
+    <div class="fade-up">
+      <h2 class="sec-title" style="max-width:700px; margin:0 auto 20px;">Получите бесплатный аудит</h2>
+      <p class="sec-desc" style="margin:0 auto 48px;">Оставьте заявку прямо сейчас, чтобы запланировать время.</p>
+    </div>
+    <div class="cta-cards fade-up">
+      <div class="cta-card">Проведём экспресс-анализ процессов</div>
+      <div class="cta-card">Покажем точки потери денег</div>
+      <div class="cta-card">Предложим оптимальную архитектуру AI-системы</div>
+      <div class="cta-card">Подготовим демо-версию под ваш бизнес</div>
+    </div>
+    <a href="https://t.me/saimanov" target="_blank" class="btn fade-up">Оставить заявку</a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">AI-Ассистенты</div>
+  <div class="copy">© 2026 · Цифровые сотрудники для бизнеса</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
